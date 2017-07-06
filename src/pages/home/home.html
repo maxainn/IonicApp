@@ -1,0 +1,99 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>Consolas</ion-title>
+	</ion-navbar>
+</ion-header>
+<!--  Esta es la seleccion de consolas  -->
+<ion-content padding>
+	<div>
+		<div>
+			<ion-list>
+				<ion-item>
+					<ion-label>Consolas</ion-label>
+					<ion-select [(ngModel)]="consola" (ngModelChange)="onChangeConsola($event)">
+						<ion-option value="xbox">Xbox ONE X</ion-option>
+						<ion-option value="ps">PlayStation 4</ion-option>
+						<ion-option value="ns">Nintendo Switch</ion-option>
+					</ion-select>
+				</ion-item>
+			</ion-list>
+		</div>
+		<div>
+			<ion-list>
+				<ion-item>
+					<ion-label>Genero</ion-label>
+					<ion-select [(ngModel)]="gaming">
+						<ion-option value="Plataforma">Plataforma</ion-option>
+						<ion-option value="FPS">FPS</ion-option>
+						<ion-option value="Deportes">Deportes</ion-option>
+						<ion-option value="Sandbox">Sandbox</ion-option>
+					</ion-select>
+				</ion-item>
+			</ion-list>
+		</div>
+	</div>
+
+
+
+
+	<!-- Aca se muestra la ficha de la consola seleccionada -->
+	<div>
+		<ion-card *ngIf="consolaSeleccionada != null">
+			<ion-card-header>
+				{{consolaSeleccionada.nombre}}
+			</ion-card-header>
+			<ion-card-content>
+				{{consolaSeleccionada.historia}}<br/> Numero de juegos: {{consolaSeleccionada.cantidadDeJuegos}}<br/>
+			</ion-card-content>
+			<div class="boton">
+				<button ion-button outline (click)="onVerJuegos()">Juegos</button>
+			</div>
+		</ion-card>
+	</div>
+
+
+
+	<div *ngIf="verJuegos">
+
+
+		<div padding>
+			<ion-segment [(ngModel)]="JuegosConsolas">
+				<ion-segment-button value="Singleplayer">
+					Singleplayer
+				</ion-segment-button>
+
+				<ion-segment-button value="Multiplayer">
+					Multiplayer
+				</ion-segment-button>
+			</ion-segment>
+		</div>
+
+
+
+		<div [ngSwitch]="JuegosConsolas">
+			<ion-list *ngSwitchCase="'Singleplayer'">
+
+				<ion-item *ngFor="let juego of consolaSeleccionada.juegos.singleplayer">
+					<ion-thumbnail item-start>
+						<img src="{{juego.image}}">
+					</ion-thumbnail>
+					<h2>{{juego.nombre}} ({{juego.year}})</h2>
+				</ion-item>
+
+			</ion-list>
+
+			<ion-list *ngSwitchCase="'Multiplayer'">
+				<ion-item *ngFor="let juego of consolaSeleccionada.juegos.multiplayer">
+					<ion-thumbnail item-start>
+						<img src="{{juego.image}}">
+					</ion-thumbnail>
+					<h2>{{juego.nombre}} ({{juego.year}})</h2>
+				</ion-item>
+			</ion-list>
+		</div>
+
+
+
+	</div>
+
+</ion-content>
